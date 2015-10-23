@@ -22,9 +22,7 @@ SharedAssets/
 
 sysinfo.txt
 
-Assets/Gizmos*
-Assets/LeapMotion*
-Assets/LeapMotionVR*
-Assets/OVR*
-Assets/Plugins*
+# Ignore large assets (should not be on repo)
+Assets/Third-Party Assets
+Assets/Third-Party Assets.meta
 
