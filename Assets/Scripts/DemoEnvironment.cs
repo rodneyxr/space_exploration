@@ -10,8 +10,9 @@ namespace Hover.Demo.CastCubes {
 	public class DemoEnvironment : MonoBehaviour {
 
 		public int RandomSeed = 0;
+		public List<GameObject> planets;
 
-		private const int Count = 400;
+//		private const int Count = 400;
 
 		public enum ColorMode {
 			White,
@@ -27,26 +28,33 @@ namespace Hover.Demo.CastCubes {
 		}
 
 		public enum CameraPlacement {
-			Center,
-			Back,
-			Top
+			Sun,
+			Mercury,
+			Venus,
+			Earth,
+			Mars,
+			Jupiter,
+			Saturn,
+			Uranus,
+			Neptune,
+			Pluto
 		}
 
-		private readonly GameObject[] vHolds;
-		private readonly GameObject[] vCubes;
+//		private readonly GameObject[] vHolds;
+//		private readonly GameObject[] vCubes;
 
-		private readonly DemoMotion vOrbitMotion;
-		private readonly DemoMotion vSpinMotion;
-		private readonly DemoMotion vBobMotion;
-		private readonly DemoMotion vGrowMotion;
+//		private readonly DemoMotion vOrbitMotion;
+//		private readonly DemoMotion vSpinMotion;
+//		private readonly DemoMotion vBobMotion;
+//		private readonly DemoMotion vGrowMotion;
 
 		private readonly DemoAnimFloat vLightSpotAnim;
 		private readonly DemoAnimVector3 vCameraAnim;
 		private readonly DemoAnimQuaternion vCameraRotAnim;
 
-		private readonly IDictionary<MotionType, DemoMotion> vMotionMap;
-		private readonly IDictionary<CameraPlacement, Vector3> vCameraMap;
-		private readonly IDictionary<CameraPlacement, Quaternion> vCameraRotMap;
+		private IDictionary<MotionType, DemoMotion> vMotionMap;
+		private IDictionary<CameraPlacement, Vector3> vCameraMap;
+		private IDictionary<CameraPlacement, Quaternion> vCameraRotMap;
 
 		private GameObject vCubesObj;
 		private Light vLight;
@@ -54,40 +62,28 @@ namespace Hover.Demo.CastCubes {
 		private GameObject vEnviro;
 		private ColorMode vColorMode;
 
-
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public DemoEnvironment() {
-			vHolds = new GameObject[Count];
-			vCubes = new GameObject[Count];
+//			vHolds = new GameObject[Count];
+//			vCubes = new GameObject[Count];
 
-			vOrbitMotion = new DemoMotion(10, 600);
-			vSpinMotion = new DemoMotion(45, 600);
-			vBobMotion = new DemoMotion(0.5f, 600);
-			vGrowMotion = new DemoMotion(0.5f, 600);
+//			vOrbitMotion = new DemoMotion(10, 600);
+//			vSpinMotion = new DemoMotion(45, 600);
+//			vBobMotion = new DemoMotion(0.5f, 600);
+//			vGrowMotion = new DemoMotion(0.5f, 600);
 
 			vLightSpotAnim = new DemoAnimFloat(600);
 			vCameraAnim = new DemoAnimVector3(6000);
 			vCameraRotAnim = new DemoAnimQuaternion(6000);
 
-			vMotionMap = new Dictionary<MotionType, DemoMotion> {
-				{ MotionType.Orbit,	vOrbitMotion },
-				{ MotionType.Spin,	vSpinMotion },
-				{ MotionType.Bob,	vBobMotion },
-				{ MotionType.Grow,	vGrowMotion }
-			};
+//			vMotionMap = new Dictionary<MotionType, DemoMotion> {
+//				{ MotionType.Orbit,	vOrbitMotion },
+//				{ MotionType.Spin,	vSpinMotion },
+//				{ MotionType.Bob,	vBobMotion },
+//				{ MotionType.Grow,	vGrowMotion }
+//			};
 
-			vCameraMap = new Dictionary<CameraPlacement, Vector3> {
-				{ CameraPlacement.Center,	Vector3.zero },
-				{ CameraPlacement.Back,	new Vector3(0, 0, 20) },
-				{ CameraPlacement.Top,	new Vector3(0, 0, 20) }
-			};
-
-			vCameraRotMap = new Dictionary<CameraPlacement, Quaternion> {
-				{ CameraPlacement.Center, Quaternion.identity },
-				{ CameraPlacement.Back,	Quaternion.identity },
-				{ CameraPlacement.Top,	Quaternion.FromToRotation(Vector3.forward, Vector3.up) }
-			};
 		}
 
 
@@ -103,9 +99,9 @@ namespace Hover.Demo.CastCubes {
 			vSpotlight = GameObject.Find("Spotlight").GetComponent<Light>();
 			vEnviro = GameObject.Find("DemoEnvironment");
 
-			for ( int i = 0 ; i < Count ; ++i ) {
-				BuildCube(i);
-			}
+//			for ( int i = 0 ; i < Count ; ++i ) {
+//				BuildCube(i);
+//			}
 
 			vSpotlight.enabled = false;
 
@@ -117,6 +113,32 @@ namespace Hover.Demo.CastCubes {
 				OVRPlayerController ovrPlayer = ovrObj.GetComponent<OVRPlayerController>();
 				ovrPlayer.SetSkipMouseRotation(true);
 			}
+
+			vCameraMap = new Dictionary<CameraPlacement, Vector3> {
+				{ CameraPlacement.Sun,		planets[0].transform.position },
+				{ CameraPlacement.Mercury,	planets[1].transform.position },
+				{ CameraPlacement.Venus,	planets[2].transform.position },
+				{ CameraPlacement.Earth,	planets[3].transform.position },
+				{ CameraPlacement.Mars,		planets[4].transform.position },
+				{ CameraPlacement.Jupiter,	planets[5].transform.position },
+				{ CameraPlacement.Saturn,	planets[6].transform.position },
+				{ CameraPlacement.Uranus,	planets[7].transform.position },
+				{ CameraPlacement.Neptune,	planets[8].transform.position },
+				{ CameraPlacement.Pluto,	planets[9].transform.position }
+			};
+			
+			vCameraRotMap = new Dictionary<CameraPlacement, Quaternion> {
+				{ CameraPlacement.Sun, Quaternion.identity },
+				{ CameraPlacement.Mercury,	Quaternion.identity },
+				{ CameraPlacement.Venus,	Quaternion.identity },
+				{ CameraPlacement.Earth,	Quaternion.identity },
+				{ CameraPlacement.Mars,	Quaternion.identity },
+				{ CameraPlacement.Jupiter,	Quaternion.identity },
+				{ CameraPlacement.Saturn,	Quaternion.identity },
+				{ CameraPlacement.Uranus,	Quaternion.identity },
+				{ CameraPlacement.Neptune,	Quaternion.identity },
+				{ CameraPlacement.Pluto,	Quaternion.identity }
+			};
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -129,14 +151,14 @@ namespace Hover.Demo.CastCubes {
 			// BUG: This method causes contant recentering disallowing the user to look sideways
 //			UpdateOculus();
 
-			vOrbitMotion.Update();
-			vSpinMotion.Update();
-			vBobMotion.Update();
-			vGrowMotion.Update();
+//			vOrbitMotion.Update();
+//			vSpinMotion.Update();
+//			vBobMotion.Update();
+//			vGrowMotion.Update();
 
-			for ( int i = 0 ; i < Count ; ++i ) {
-				UpdateCube(i);
-			}
+//			for ( int i = 0 ; i < Count ; ++i ) {
+//				UpdateCube(i);
+//			}
 			
 			vSpotlight.intensity = vLightSpotAnim.GetValue();
 			vSpotlight.enabled = (vSpotlight.intensity > 0);
@@ -162,15 +184,15 @@ namespace Hover.Demo.CastCubes {
 				color = HsvToColor(pHue, 1, 1);
 			}
 
-			for ( int i = 0 ; i < Count ; ++i ) {
-				GameObject cube = vCubes[i];
-
-				if ( vColorMode == ColorMode.Random ) {
-					color = cube.GetComponent<DemoCube>().ColorRandom;
-				}
-
-				cube.GetComponent<Renderer>().sharedMaterial.color = color;
-			}
+//			for ( int i = 0 ; i < Count ; ++i ) {
+//				GameObject cube = vCubes[i];
+//
+//				if ( vColorMode == ColorMode.Random ) {
+//					color = cube.GetComponent<DemoCube>().ColorRandom;
+//				}
+//
+//				cube.GetComponent<Renderer>().sharedMaterial.color = color;
+//			}
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -180,10 +202,10 @@ namespace Hover.Demo.CastCubes {
 
 		/*--------------------------------------------------------------------------------------------*/
 		public void SetMotionSpeed(float pSpeed) {
-			vOrbitMotion.GlobalSpeed = pSpeed;
-			vSpinMotion.GlobalSpeed = pSpeed;
-			vBobMotion.GlobalSpeed = pSpeed;
-			vGrowMotion.GlobalSpeed = pSpeed;
+//			vOrbitMotion.GlobalSpeed = pSpeed;
+//			vSpinMotion.GlobalSpeed = pSpeed;
+//			vBobMotion.GlobalSpeed = pSpeed;
+//			vGrowMotion.GlobalSpeed = pSpeed;
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -229,68 +251,68 @@ namespace Hover.Demo.CastCubes {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private void BuildCube(int pIndex) {
-			float radius = RandomUtil.Float(4, 10);
-			float radiusPercent = (radius-4)/6f;
-			float orbitSpeed = (float)Math.Pow(1-radiusPercent, 2)*0.2f + 0.8f;
-
-			var hold = new GameObject("Hold"+pIndex);
-			hold.transform.parent = vCubesObj.transform;
-			vHolds[pIndex] = hold;
-
-			DemoCubeHold holdData = hold.AddComponent<DemoCubeHold>();
-			holdData.OrbitAxis = RandomUtil.UnitVector();
-			holdData.OrbitSpeed = RandomUtil.Float(0.7f, 1, 2)*orbitSpeed;
-			holdData.OrbitInitRot = UnityEngine.Random.rotationUniform;
-
-			////
-
-			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			cube.transform.parent = hold.transform;
-			cube.name = "Cube"+pIndex;
-			cube.GetComponent<Renderer>().material = new Material(Shader.Find("Diffuse"));
-			vCubes[pIndex] = cube;
-
-			DemoCube cubeData = cube.AddComponent<DemoCube>();
-			cubeData.ColorRandom = RandomUtil.UnitColor(0.1f, 1);
-			cubeData.SpinAxis = RandomUtil.UnitVector();
-			cubeData.SpinSpeed = RandomUtil.Float(0.5f, 1, 2);
-			cubeData.SpinInitRot = UnityEngine.Random.rotationUniform;
-			cubeData.BobSpeed = RandomUtil.Float(0.5f, 1, 2);
-			cubeData.BobInitPos = RandomUtil.Float(-1, 1);
-			cubeData.BobRadiusMin = radius;
-			cubeData.BobRadiusMax = cubeData.BobRadiusMin+3;
-			cubeData.GrowSpeed = RandomUtil.Float(0.5f, 1, 2);
-			cubeData.GrowInitPos = RandomUtil.Float(-1, 1);
-			cubeData.GrowScaleMin = RandomUtil.UnitVector(0.4f)*0.6f;
-			cubeData.GrowScaleMax = RandomUtil.UnitVector(0.4f)*1.2f;
-		}
+//		private void BuildCube(int pIndex) {
+//			float radius = RandomUtil.Float(4, 10);
+//			float radiusPercent = (radius-4)/6f;
+//			float orbitSpeed = (float)Math.Pow(1-radiusPercent, 2)*0.2f + 0.8f;
+//
+//			var hold = new GameObject("Hold"+pIndex);
+//			hold.transform.parent = vCubesObj.transform;
+//			vHolds[pIndex] = hold;
+//
+//			DemoCubeHold holdData = hold.AddComponent<DemoCubeHold>();
+//			holdData.OrbitAxis = RandomUtil.UnitVector();
+//			holdData.OrbitSpeed = RandomUtil.Float(0.7f, 1, 2)*orbitSpeed;
+//			holdData.OrbitInitRot = UnityEngine.Random.rotationUniform;
+//
+//			////
+//
+//			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+//			cube.transform.parent = hold.transform;
+//			cube.name = "Cube"+pIndex;
+//			cube.GetComponent<Renderer>().material = new Material(Shader.Find("Diffuse"));
+//			vCubes[pIndex] = cube;
+//
+//			DemoCube cubeData = cube.AddComponent<DemoCube>();
+//			cubeData.ColorRandom = RandomUtil.UnitColor(0.1f, 1);
+//			cubeData.SpinAxis = RandomUtil.UnitVector();
+//			cubeData.SpinSpeed = RandomUtil.Float(0.5f, 1, 2);
+//			cubeData.SpinInitRot = UnityEngine.Random.rotationUniform;
+//			cubeData.BobSpeed = RandomUtil.Float(0.5f, 1, 2);
+//			cubeData.BobInitPos = RandomUtil.Float(-1, 1);
+//			cubeData.BobRadiusMin = radius;
+//			cubeData.BobRadiusMax = cubeData.BobRadiusMin+3;
+//			cubeData.GrowSpeed = RandomUtil.Float(0.5f, 1, 2);
+//			cubeData.GrowInitPos = RandomUtil.Float(-1, 1);
+//			cubeData.GrowScaleMin = RandomUtil.UnitVector(0.4f)*0.6f;
+//			cubeData.GrowScaleMax = RandomUtil.UnitVector(0.4f)*1.2f;
+//		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private void UpdateCube(int pIndex) {
-			GameObject hold = vHolds[pIndex];
-			GameObject cube = vCubes[pIndex];
-			DemoCubeHold holdData = hold.GetComponent<DemoCubeHold>();
-			DemoCube cubeData = cube.GetComponent<DemoCube>();
-
-			float orbitAngle = vOrbitMotion.Position*holdData.OrbitSpeed;
-			hold.transform.localRotation = holdData.OrbitInitRot*
-				Quaternion.AngleAxis(orbitAngle, holdData.OrbitAxis);
-
-			float spinAngle = vSpinMotion.Position*cubeData.SpinSpeed;
-			cube.transform.localRotation = cubeData.SpinInitRot*
-				Quaternion.AngleAxis(spinAngle, cubeData.SpinAxis);
-
-			float bobPos = cubeData.BobInitPos+vBobMotion.Position*cubeData.BobSpeed;
-			bobPos = (float)Math.Sin(bobPos*Math.PI)/2f + 0.5f;
-			bobPos = Mathf.Lerp(cubeData.BobRadiusMin, cubeData.BobRadiusMax, bobPos);
-			cube.transform.localPosition = new Vector3(0, 0, bobPos);
-
-			float growPos = cubeData.GrowInitPos+vGrowMotion.Position*cubeData.GrowSpeed;
-			growPos = (float)Math.Sin(growPos*Math.PI)/2f + 0.5f;
-			cube.transform.localScale = 
-				Vector3.Lerp(cubeData.GrowScaleMin, cubeData.GrowScaleMax, growPos);
-		}
+//		private void UpdateCube(int pIndex) {
+//			GameObject hold = vHolds[pIndex];
+//			GameObject cube = vCubes[pIndex];
+//			DemoCubeHold holdData = hold.GetComponent<DemoCubeHold>();
+//			DemoCube cubeData = cube.GetComponent<DemoCube>();
+//
+//			float orbitAngle = vOrbitMotion.Position*holdData.OrbitSpeed;
+//			hold.transform.localRotation = holdData.OrbitInitRot*
+//				Quaternion.AngleAxis(orbitAngle, holdData.OrbitAxis);
+//
+//			float spinAngle = vSpinMotion.Position*cubeData.SpinSpeed;
+//			cube.transform.localRotation = cubeData.SpinInitRot*
+//				Quaternion.AngleAxis(spinAngle, cubeData.SpinAxis);
+//
+//			float bobPos = cubeData.BobInitPos+vBobMotion.Position*cubeData.BobSpeed;
+//			bobPos = (float)Math.Sin(bobPos*Math.PI)/2f + 0.5f;
+//			bobPos = Mathf.Lerp(cubeData.BobRadiusMin, cubeData.BobRadiusMax, bobPos);
+//			cube.transform.localPosition = new Vector3(0, 0, bobPos);
+//
+//			float growPos = cubeData.GrowInitPos+vGrowMotion.Position*cubeData.GrowSpeed;
+//			growPos = (float)Math.Sin(growPos*Math.PI)/2f + 0.5f;
+//			cube.transform.localScale = 
+//				Vector3.Lerp(cubeData.GrowScaleMin, cubeData.GrowScaleMax, growPos);
+//		}
 		
 
 		////////////////////////////////////////////////////////////////////////////////////////////////

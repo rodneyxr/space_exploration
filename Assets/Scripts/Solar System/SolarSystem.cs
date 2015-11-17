@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class SolarSystem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	private Planet[] planets;
+
+	void Start() {
+		planets = FindObjectsOfType<Planet> ();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 	
 	}
-
 
 }
